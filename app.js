@@ -12,21 +12,8 @@ agregarPlato.onclick = () => {
   mostrarMenu();
 };
 guardarO.onclick = () => {
-  Swal.fire({
-    title: "¿Estás seguro?",
-    text: "¡Confirmarás guardar esta orden!",
-    icon: "warning",
-    showCancelButton: true,
-    confirmButtonColor: "#3085d6",
-    cancelButtonColor: "#d33",
-    confirmButtonText: "Sí, guardar",
-    cancelButtonText: "Cancelar",
-  }).then((result) => {
-    if (result.isConfirmed) {
-      guardarOrden();
-    }
-  });
-  cancelarOrden();
+  guardarOrden2();
+
 };
 
 eliminarOrden.onclick = cancelarOrden;
@@ -344,6 +331,52 @@ function cancelarOrden() {
     }
   });
 }
+
+
+
+function guardarOrden2() {
+  let tbody = divOrden.querySelector("tbody");
+
+  if (tbody && tbody.children.length === 0) {
+    Swal.fire({
+      icon: "info",
+      title: "No hay platos",
+      text: "No hay platos en la orden para cancelar.",
+    });
+    return;
+  }
+
+  Swal.fire({
+    title: "¿Estás seguro?",
+    text: "¡QUIERES GUARDAR LA ORDEN!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Sí, GUARDAR",
+    cancelButtonText: "Cancelar",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      if (tbody) {
+        tbody.innerHTML = "";
+      }
+
+      document.querySelector("#subtotal").textContent = "$0.00";
+      document.querySelector("#propina").textContent = "$0.00";
+      document.querySelector("#total").textContent = "$0.00";
+
+      localStorage.removeItem("ordenes");
+
+      Swal.fire({
+        icon: "info",
+        title: "Orden GUARDADA",
+        text: "La orden ha sido GUARDADA ",
+      });
+    }
+  });
+}
+
+
 
 function actualizarListaPlatos() {
   let divPlatos = document.querySelector("#platos");
