@@ -26,6 +26,7 @@ guardarO.onclick = () => {
       guardarOrden();
     }
   });
+  cancelarOrden();
 };
 
 eliminarOrden.onclick = cancelarOrden;
